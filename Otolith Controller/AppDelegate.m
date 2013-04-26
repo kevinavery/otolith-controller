@@ -131,22 +131,12 @@
  Update UI with step count data received from device
  */
 - (void) updateWithStepData:(NSData *)data
-{
-    const uint8_t *reportData = [data bytes];
-    uint16_t bpm = 0;
+{    
+    const uint8_t *step_data = [data bytes];
     
-    if ((reportData[0] & 0x01) == 0)
-    {
-        /* uint8 bpm */
-        bpm = reportData[1];
-    }
-    else
-    {
-        /* uint16 bpm */
-        bpm = CFSwapInt16LittleToHost(*(uint16_t *)(&reportData[1]));
-    }
+    uint8_t step_count = step_data[0];
     
-    NSMutableString *msg = [NSMutableString stringWithFormat:@"Received: %d\n", bpm];
+    NSMutableString *msg = [NSMutableString stringWithFormat:@"Received: %d\n", step_count];
     [self.logField insertText:msg];
 
 }
@@ -332,8 +322,13 @@
             /* Read step count */
             if ([aChar.UUID isEqual:[CBUUID UUIDWithString:@"2001"]])
             {
-                [aPeripheral readValueForCharacteristic:aChar];
                 NSLog(@"Found a Step Count Characteristic");
+                
+                // This will only read once
+                //[aPeripheral readValueForCharacteristic:aChar];
+                
+                // This will read every time data is sent
+                [peripheral setNotifyValue:YES forCharacteristic:aChar];
             }
         }
     }   
@@ -373,10 +368,7 @@
     /* Updated value for step count received */
     if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"2001"]])
     {
-        if( (characteristic.value)  || !error )
-        {
-            [self updateWithStepData:characteristic.value];
-        }
+       [self updateWithStepData:characteristic.value];
     }
     /* Value for device Name received */
     else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:CBUUIDDeviceNameString]])

@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388539299.708516"
+         timestampString = "388696372.084344"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "199"
-         endingLineNumber = "199"
+         startingLineNumber = "189"
+         endingLineNumber = "189"
          landmarkName = "@implementation AppDelegate"
          landmarkType = "3">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388539299.708516"
+         timestampString = "388696372.084344"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "226"
-         endingLineNumber = "226"
+         startingLineNumber = "216"
+         endingLineNumber = "216"
          landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388539299.708516"
+         timestampString = "388696372.084344"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "242"
-         endingLineNumber = "242"
+         startingLineNumber = "232"
+         endingLineNumber = "232"
          landmarkName = "-centralManager:didRetrievePeripherals:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388539299.708516"
+         timestampString = "388696372.084344"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "261"
-         endingLineNumber = "261"
+         startingLineNumber = "251"
+         endingLineNumber = "251"
          landmarkName = "-centralManager:didConnectPeripheral:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388539299.708516"
+         timestampString = "388696372.084344"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "273"
-         endingLineNumber = "273"
+         startingLineNumber = "263"
+         endingLineNumber = "263"
          landmarkName = "-centralManager:didDisconnectPeripheral:error:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,12 +73,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388655810.67553"
+         timestampString = "388696836.480627"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "378"
-         endingLineNumber = "378"
+         startingLineNumber = "373"
+         endingLineNumber = "373"
          landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Otolith Controller/AppDelegate.m"
+         timestampString = "388696372.084344"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "137"
+         endingLineNumber = "137"
+         landmarkName = "-updateWithStepData:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
