@@ -8,15 +8,25 @@
 //
 
 #import "AppDelegate.h"
+#import "StepCounter.h"
+#import "UserAlarm.h"
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     autoConnect = FALSE;
+    
     self.devices = [NSMutableArray array];
     
+    StepCounter *sc = [[StepCounter alloc] init];
+    [self setStepCounter:sc];
+    
+    UserAlarm *ua = [[UserAlarm alloc] init];
+    [self setUserAlarm:ua];
+    
     manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    
     if( autoConnect )
     {
         [self startScan];
@@ -122,7 +132,76 @@
     }
 }
 
+- (int)convertToInt:(NSDate*)date
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+    int hour = (int)[components hour];
+    int minute = (int)[components minute];
+    NSLog(@"Hour: %d Minute: %d\n", hour, minute);
+    return hour*60 + minute;
+}
 
+/*
+ Returns the number of minutes from the current time that the user
+ wants the alarm to go off.
+ */
+- (int)getAlarmTimeDelta
+{
+    NSString *time = [self.alarmTimeField stringValue];
+    //NSLog(@"Alarm set for %@\n", time);
+    
+    /* This didn't work... sigh (fails to get correct hour) */
+    //NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    //NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    //[formatter setLocale:enUSPOSIXLocale];
+    //[formatter setDateFormat:@"hh:mm a"];
+    //[formatter setTimeZone:[NSTimeZone  localTimeZone]];
+    //NSDate *convDate = [formatter dateFromString:time];
+    //NSLog(@"Converted to %@\n", convDate);
+    //int userTime = [self convertToInt:convDate];
+    //NSLog(@"User time: %d\n", userTime);
+    
+    /* The ugly, terrible, 24-hour-only way */
+    NSString *trimmed = [time stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    int colonIndex = [trimmed length] == 4 ? 1 : 2;
+    NSString *hour = [trimmed substringToIndex:colonIndex];
+    NSString *minute = [trimmed substringFromIndex:(colonIndex+1)];
+    //NSLog(@"Hour: %@ Minute: %@\n", hour, minute);
+    int userTime = [hour intValue]*60 + [minute intValue];
+    //NSLog(@"User time: %d\n", userTime);
+    
+    /* Get the current time to compare it to */
+    NSDate *currentDate = [NSDate date];
+    int currentTime = [self convertToInt:currentDate];
+    //NSLog(@"Current time 2: %d\n", currentTime);
+    
+    int delta = userTime - currentTime;
+    if (delta < 0)
+        delta = 24*60 + delta;
+    
+    return delta;
+}
+
+- (IBAction)setAlarmButtonPressed:(id)sender
+{
+    NSLog(@"setAlarmButtonPressed");
+    
+    // delta should never be negative
+    uint16_t delta = [self getAlarmTimeDelta];
+    NSLog(@"Alarm time delta: %d\n", delta);
+    
+    NSData* valData = [NSData dataWithBytes:(void*)&delta length:sizeof(uint16_t)];
+    [peripheral writeValue:valData forCharacteristic:alarmChar type:CBCharacteristicWriteWithoutResponse];
+}
+
+- (IBAction)resetCountButtonPressed:(id)sender
+{
+    NSLog(@"resetCountButtonPressed");
+    
+    [self.stepCounter resetStepCount];
+    [self updateUserInterface];
+}
 
 
 #pragma mark - Step Count Data
@@ -132,13 +211,24 @@
  */
 - (void) updateWithStepData:(NSData *)data
 {    
-    const uint8_t *step_data = [data bytes];
+    const uint8_t *stepData = [data bytes];
     
-    uint8_t step_count = step_data[0];
+    uint8_t stepCount = stepData[0];
     
-    NSMutableString *msg = [NSMutableString stringWithFormat:@"Received: %d\n", step_count];
-    [self.logField insertText:msg];
+    NSLog(@"Received step count: %d\n", stepCount);
+    
+    [self.stepCounter updateWithCount:stepCount];
+    [self updateUserInterface];
+    
+    //NSMutableString *msg = [NSMutableString stringWithFormat:@"Received: %d\n", stepCount];
+    //[self.logField insertText:msg];
 
+}
+
+- (void)updateUserInterface
+{
+    [self.stepCountField setIntValue:[self.stepCounter latestStepCount]];
+    [self.totalStepCountField setIntValue:[self.stepCounter totalStepCount]];
 }
 
 
@@ -246,6 +336,9 @@
 {
     [aPeripheral setDelegate:self];
     [aPeripheral discoverServices:nil];
+    
+    // Save reference to connected peripheral
+    peripheral = aPeripheral;
 	
     [connectButton setTitle:@"Disconnect"];
 }
@@ -294,6 +387,11 @@
             [aPeripheral discoverCharacteristics:nil forService:aService];
         }
         
+        if ([aService.UUID isEqual:[CBUUID UUIDWithString:@"1001"]])
+        {
+            [aPeripheral discoverCharacteristics:nil forService:aService];
+        }
+        
         /* Device Information Service */
         if ([aService.UUID isEqual:[CBUUID UUIDWithString:@"180A"]])
         {
@@ -320,7 +418,7 @@
         for (CBCharacteristic *aChar in service.characteristics)
         {
             /* Read step count */
-            if ([aChar.UUID isEqual:[CBUUID UUIDWithString:@"2001"]])
+            if ([aChar.UUID isEqual:[CBUUID UUIDWithString:@"2000"]])
             {
                 NSLog(@"Found a Step Count Characteristic");
                 
@@ -331,7 +429,23 @@
                 [peripheral setNotifyValue:YES forCharacteristic:aChar];
             }
         }
-    }   
+    }
+    
+    if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1001"]])
+    {
+        for (CBCharacteristic *aChar in service.characteristics)
+        {
+            /* Write alarm time */
+            if ([aChar.UUID isEqual:[CBUUID UUIDWithString:@"2001"]])
+            {
+                NSLog(@"Found a Alarm Time Characteristic");
+                
+                // Store reference to this characteristic
+                alarmChar = aChar;
+            }
+        }
+    }
+    
     
     if ( [service.UUID isEqual:[CBUUID UUIDWithString:CBUUIDGenericAccessProfileString]] )
     {
@@ -366,7 +480,7 @@
 - (void) peripheral:(CBPeripheral *)aPeripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
 {
     /* Updated value for step count received */
-    if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"2001"]])
+    if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"2000"]])
     {
        [self updateWithStepData:characteristic.value];
     }

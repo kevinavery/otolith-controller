@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388696372.084344"
+         timestampString = "388903840.103755"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "189"
-         endingLineNumber = "189"
+         startingLineNumber = "279"
+         endingLineNumber = "279"
          landmarkName = "@implementation AppDelegate"
          landmarkType = "3">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388696372.084344"
+         timestampString = "388903840.103755"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "216"
-         endingLineNumber = "216"
+         startingLineNumber = "306"
+         endingLineNumber = "306"
          landmarkName = "-centralManager:didDiscoverPeripheral:advertisementData:RSSI:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388696372.084344"
+         timestampString = "388903840.103755"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
+         startingLineNumber = "322"
+         endingLineNumber = "322"
          landmarkName = "-centralManager:didRetrievePeripherals:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388696372.084344"
+         timestampString = "388903840.103755"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "251"
-         endingLineNumber = "251"
+         startingLineNumber = "344"
+         endingLineNumber = "344"
          landmarkName = "-centralManager:didConnectPeripheral:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388696372.084344"
+         timestampString = "388903840.103755"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "263"
-         endingLineNumber = "263"
+         startingLineNumber = "356"
+         endingLineNumber = "356"
          landmarkName = "-centralManager:didDisconnectPeripheral:error:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388696836.480627"
+         timestampString = "388903840.103755"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "373"
-         endingLineNumber = "373"
+         startingLineNumber = "485"
+         endingLineNumber = "485"
          landmarkName = "-peripheral:didUpdateValueForCharacteristic:error:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,12 +86,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Otolith Controller/AppDelegate.m"
-         timestampString = "388696372.084344"
+         timestampString = "388903840.103755"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "137"
-         endingLineNumber = "137"
+         startingLineNumber = "220"
+         endingLineNumber = "220"
          landmarkName = "-updateWithStepData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Otolith Controller/AppDelegate.m"
+         timestampString = "388896831.529538"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "139"
+         endingLineNumber = "139"
+         landmarkName = "-convertToInt:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Otolith Controller/AppDelegate.m"
+         timestampString = "388903840.103755"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "162"
+         endingLineNumber = "162"
+         landmarkName = "-getAlarmTime"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
