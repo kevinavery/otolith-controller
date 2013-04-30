@@ -19,7 +19,6 @@
     CBPeripheral *peripheral;
     CBCharacteristic *alarmChar;
     
-    
     NSMutableArray *devices;
     
     IBOutlet NSButton *connectButton;
@@ -31,10 +30,10 @@
 @property (assign) IBOutlet NSWindow *scanSheet;
 
 @property (assign) IBOutlet NSTextView *logField;
-@property (weak) IBOutlet NSArrayController *arrayController;
-@property (weak) IBOutlet NSTextField *alarmTimeField;
-@property (weak) IBOutlet NSTextField *stepCountField;
-@property (weak) IBOutlet NSTextField *totalStepCountField;
+@property (assign) IBOutlet NSArrayController *arrayController;
+@property (assign) IBOutlet NSTextField *alarmTimeField;
+@property (assign) IBOutlet NSTextField *stepCountField;
+@property (assign) IBOutlet NSTextField *totalStepCountField;
 
 @property (retain) NSMutableArray *devices;
 @property (strong) StepCounter *stepCounter;

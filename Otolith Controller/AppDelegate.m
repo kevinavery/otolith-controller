@@ -13,6 +13,16 @@
 
 @implementation AppDelegate
 
+@synthesize window;
+@synthesize scanSheet;
+@synthesize logField;
+@synthesize arrayController;
+@synthesize alarmTimeField;
+@synthesize stepCountField;
+@synthesize totalStepCountField;
+@synthesize devices;
+
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     autoConnect = FALSE;
@@ -38,6 +48,13 @@
     [self stopScan];
     
     [peripheral setDelegate:nil];
+    [peripheral release];
+    
+    [devices release];
+    
+    [manager release];
+    
+    [super dealloc];
 }
 
 
@@ -99,6 +116,7 @@
         {
             NSUInteger anIndex = [indexes firstIndex];
             peripheral = [self.devices objectAtIndex:anIndex];
+            [peripheral retain];
             [connectButton setTitle:@"Cancel"];
             [manager connectPeripheral:peripheral options:nil];
         }
@@ -264,6 +282,11 @@
     
     [self cancelScanSheet:nil];
     
+    NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+    [alert setMessageText:state];
+    [alert addButtonWithTitle:@"OK"];
+    [alert setIcon:[[[NSImage alloc] initWithContentsOfFile:@"AppIcon"] autorelease]];
+    [alert beginSheetModalForWindow:[self window] modalDelegate:self didEndSelector:nil contextInfo:nil];
     return FALSE;
 }
 
@@ -323,6 +346,7 @@
     if([peripherals count] >=1)
     {
         peripheral = [peripherals objectAtIndex:0];
+        [peripheral retain];
         [connectButton setTitle:@"Cancel"];
         [manager connectPeripheral:peripheral options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:CBConnectPeripheralOptionNotifyOnDisconnectionKey]];
     }
@@ -334,6 +358,8 @@
  */
 - (void) centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral
 {
+    NSLog(@"didConnectPeripheral");
+    
     [aPeripheral setDelegate:self];
     [aPeripheral discoverServices:nil];
     
@@ -349,10 +375,13 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)aPeripheral error:(NSError *)error
 {
+    NSLog(@"didDisconnectPeripheral");
+    
     [connectButton setTitle:@"Connect"];
     if( peripheral )
     {
         [peripheral setDelegate:nil];
+        [peripheral release];
         peripheral = nil;
     }
 }
@@ -367,6 +396,7 @@
     if( peripheral )
     {
         [peripheral setDelegate:nil];
+        [peripheral release];
         peripheral = nil;
     }
 }
@@ -378,6 +408,8 @@
  */
 - (void) peripheral:(CBPeripheral *)aPeripheral didDiscoverServices:(NSError *)error
 {
+    NSLog(@"didDiscoverServices");
+    
     for (CBService *aService in aPeripheral.services)
     {
         NSLog(@"Service found with UUID: %@", aService.UUID);
@@ -412,6 +444,7 @@
  */
 - (void) peripheral:(CBPeripheral *)aPeripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
+    NSLog(@"didDiscoverCharacteristicsForService");
     
     if ([service.UUID isEqual:[CBUUID UUIDWithString:@"1000"]])
     {
@@ -487,7 +520,7 @@
     /* Value for device Name received */
     else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:CBUUIDDeviceNameString]])
     {
-        NSString * deviceName = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
+        NSString * deviceName = [[[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding] autorelease];
         NSLog(@"Device Name = %@", deviceName);
     }
 }

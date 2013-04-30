@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A28DB6F172DDD9E00D6AB9B /* StepCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A28DB6E172DDD9E00D6AB9B /* StepCounter.m */; };
-		0A28DB72172DEAAE00D6AB9B /* UserAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A28DB71172DEAAE00D6AB9B /* UserAlarm.m */; };
+		0A28DB6F172DDD9E00D6AB9B /* StepCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A28DB6E172DDD9E00D6AB9B /* StepCounter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0A28DB72172DEAAE00D6AB9B /* UserAlarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A28DB71172DEAAE00D6AB9B /* UserAlarm.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0ABCE64717284B2900014317 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ABCE64617284B2900014317 /* Cocoa.framework */; };
 		0ABCE65117284B2900014317 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0ABCE64F17284B2900014317 /* InfoPlist.strings */; };
-		0ABCE65317284B2900014317 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE65217284B2900014317 /* main.m */; };
+		0ABCE65317284B2900014317 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE65217284B2900014317 /* main.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0ABCE65717284B2900014317 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 0ABCE65517284B2900014317 /* Credits.rtf */; };
-		0ABCE65A17284B2900014317 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE65917284B2900014317 /* AppDelegate.m */; };
+		0ABCE65A17284B2900014317 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE65917284B2900014317 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0ABCE65D17284B2900014317 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0ABCE65B17284B2900014317 /* MainMenu.xib */; };
 		0ABCE74117288DE900014317 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ABCE74017288DE900014317 /* IOBluetooth.framework */; };
 /* End PBXBuildFile section */
